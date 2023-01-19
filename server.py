@@ -45,8 +45,9 @@ class MyWebServer(socketserver.BaseRequestHandler):
         print("Handling get for path: ", path)
         statusCode, response = self.handlePath(path)
 
-        if statusCode == 200:
-            self.request.sendall(response.encode("utf-8"))
+
+        self.request.sendall(response.encode("utf-8"))
+        
         return
 
     def handlePath(self, path):
