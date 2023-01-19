@@ -24,3 +24,14 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+References
+==========
+
+Entity: GeeksForGeeks
+URL: https://www.geeksforgeeks.org/python-check-if-a-file-or-directory-exists-2/
+
+Entity: docs.python.org
+URL: https://docs.python.org/3/library/mimetypes.html
+
+Entity: developer.mozilla.org
+URL: https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
