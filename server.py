@@ -1,5 +1,7 @@
 #  coding: utf-8 
 import socketserver
+import os
+import mimetypes
 
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
 # 
@@ -32,7 +34,69 @@ class MyWebServer(socketserver.BaseRequestHandler):
     def handle(self):
         self.data = self.request.recv(1024).strip()
         print ("Got a request of: %s\n" % self.data)
-        self.request.sendall(bytearray("OK",'utf-8'))
+        lines = self.data.decode().split('\r\n')
+        method, path, protocol = lines[0].split()
+
+        if method == "GET":
+            self.handleGET(path)
+        self.request.sendall(bytearray("200 OK Not Found!",'utf-8'))
+
+    def handleGET(self, path):
+        print("Handling get for path: ", path)
+        statusCode, response = self.handlePath(path)
+
+        if statusCode == 200:
+            self.request.sendall(response.encode("utf-8"))
+        return
+
+    def handlePath(self, path):
+        path = f"./www{path}"
+        if os.path.isdir(path):
+            if path[-1] != '/':
+                # send 301 status
+                path += "/"
+
+            path += "index.html"
+
+        if os.path.isfile(path):
+            status = "HTTP/1.1 200 OK"
+            contentType, encoding = mimetypes.guess_type(path)
+            body = ""
+            with open(path, "r") as f:
+                body = f.read()
+            contentLength = str(len(body))
+
+            print("contentType: ", contentType)
+            print("contentLength: ", contentLength)
+            print("body: ", body)
+
+            response = [
+                status,
+                f"Content-Type:\t{contentType}",
+                f"Content-Length:\t{contentLength}",
+                "",
+                body
+            ]
+
+            response = "\r\n".join(response)
+            response += "\r\n"
+            return 200, response
+        else:
+            assert (not os.path.exists(path)), "Something unexpected happened, path exists"
+            status = "HTTP/1.1 404 Not Found!"
+
+            response = [
+                status
+            ]
+
+            response = "\r\n".join(response)
+            response += "\r\n"
+
+            return 404, response
+
+
+
+
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 8080
