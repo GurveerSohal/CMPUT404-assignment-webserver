@@ -39,7 +39,25 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
         if method == "GET":
             self.handleGET(path)
-        self.request.sendall(bytearray("200 OK Not Found!",'utf-8'))
+        # self.request.sendall(bytearray("200 OK Not Found!",'utf-8'))
+        else:
+            self.handleOthers(path)
+
+    def handleOthers(self, path):
+            status = "HTTP/1.1 405 Method Not Allowed"
+            response = [
+                status,
+                f"Allow:\tGET",
+                ""
+            ]
+
+
+            response = "\r\n".join(response)
+            response += "\r\n"
+
+            self.request.sendall(response.encode("utf-8"))
+
+            return
 
     def handleGET(self, path):
         print("Handling get for path: ", path)
@@ -52,10 +70,38 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
     def handlePath(self, path):
         path = f"./www{path}"
+        abspath = os.path.abspath(path)
+        curdir = os.path.abspath("./www/")
+        print(f"Path: {abspath}")
+        print(f"curdir: {curdir}")
+        if (abspath.find(curdir) == -1) or (not os.path.exists(path)):
+            status = "HTTP/1.1 404 Not Found!"
+
+            response = [
+                status
+            ]
+
+            response = "\r\n".join(response)
+            response += "\r\n"
+
+            return 404, response
+
         if os.path.isdir(path):
             if path[-1] != '/':
                 # send 301 status
-                path += "/"
+                status = "HTTP/1.1 301 Moved Permanently"
+                location = path[5:] + '/'
+                response = [
+                    status,
+                    f"Location:\t{location}",
+                    ""
+                ]
+
+
+                response = "\r\n".join(response)
+                response += "\r\n"
+
+                return 301, response
 
             path += "index.html"
 
@@ -83,17 +129,9 @@ class MyWebServer(socketserver.BaseRequestHandler):
             response += "\r\n"
             return 200, response
         else:
-            assert (not os.path.exists(path)), "Something unexpected happened, path exists"
-            status = "HTTP/1.1 404 Not Found!"
+            raise RuntimeError("It's not supposed to reach this else statement")
 
-            response = [
-                status
-            ]
-
-            response = "\r\n".join(response)
-            response += "\r\n"
-
-            return 404, response
+            return
 
 
 
