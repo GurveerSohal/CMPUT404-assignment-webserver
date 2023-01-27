@@ -1,3 +1,19 @@
+<!-- 
+Copyright 2023 Gurveer Singh Sohal
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ -->
+
 CMPUT404-assignment-webserver
 =============================
 
@@ -28,10 +44,30 @@ References
 ==========
 
 Entity: GeeksForGeeks
+
 URL: https://www.geeksforgeeks.org/python-check-if-a-file-or-directory-exists-2/
 
 Entity: docs.python.org
+
 URL: https://docs.python.org/3/library/mimetypes.html
 
 Entity: developer.mozilla.org
+
 URL: https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
+
+Entity: docs.python.org
+
+URL: https://docs.python.org/3/library/os.path.html
+
+
+
+License
+=======
+
+Copyright 2023 Gurveer Singh Sohal
+
+The following files are also licensed under the Apache License, Version 2.0 (the "License");
+
+./root.png
+
+./deep.png

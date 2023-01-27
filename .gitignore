@@ -35,6 +35,7 @@ nosetests.xml
 .project
 .pydevproject
 
+www/hardcode
 # Mac files
 .DS_Store
 www/.DS_Store

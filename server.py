@@ -5,6 +5,8 @@ import mimetypes
 
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
 # 
+# Copyright 2023 Gurveer Singh Sohal
+# 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -72,8 +74,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
         path = f"./www{path}"
         abspath = os.path.abspath(path)
         curdir = os.path.abspath("./www/")
-        print(f"Path: {abspath}")
-        print(f"curdir: {curdir}")
+
         if (abspath.find(curdir) == -1) or (not os.path.exists(path)):
             status = "HTTP/1.1 404 Not Found!"
 
