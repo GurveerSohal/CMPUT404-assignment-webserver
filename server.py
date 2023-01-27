@@ -41,7 +41,6 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
         if method == "GET":
             self.handleGET(path)
-        # self.request.sendall(bytearray("200 OK Not Found!",'utf-8'))
         else:
             self.handleOthers(path)
 
@@ -62,7 +61,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
             return
 
     def handleGET(self, path):
-        print("Handling get for path: ", path)
+        # print("Handling get for path: ", path)
         statusCode, response = self.handlePath(path)
 
 
@@ -114,9 +113,9 @@ class MyWebServer(socketserver.BaseRequestHandler):
                 body = f.read()
             contentLength = str(len(body))
 
-            print("contentType: ", contentType)
-            print("contentLength: ", contentLength)
-            print("body: ", body)
+            # print("contentType: ", contentType)
+            # print("contentLength: ", contentLength)
+            # print("body: ", body)
 
             response = [
                 status,
